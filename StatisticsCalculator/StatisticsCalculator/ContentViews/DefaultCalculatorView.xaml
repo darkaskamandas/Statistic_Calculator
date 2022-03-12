@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<contentViews:BaseCalculatorView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:contentViews="clr-namespace:StatisticsCalculator.ContentViews"
+             xmlns:translator="clr-namespace:StatisticsCalculator.Translation"
+             mc:Ignorable="d"
+             x:Class="StatisticsCalculator.ContentViews.DefaultCalculatorView">
+    <ContentView.Resources>
+
+        <Style x:Key="CalculatorButton" TargetType="Button">
+            <Setter Property="FontSize" Value="Medium"/>
+        </Style>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Grid 
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="End"
+            CompressedLayout.IsHeadless="True"
+        >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Text="{Binding ShiftText}"
+                Command="{Binding ShiftCommand}"
+                CommandParameter="{Binding SampleMode}"
+            />
+            <Button 
+                Grid.Row="1"
+                Text="{translator:Translate ModeLabel}" 
+                Style="{StaticResource CalculatorButton}"
+                Command="{Binding ModeCommand}"
+            />
+            <Button
+                Grid.Row="1"
+                Grid.Column="1"
+                Text="{translator:Translate MedianLabel}" 
+                Style="{StaticResource CalculatorButton}"
+                Command="{Binding MedianCommand}"
+            />
+            <Button
+                Grid.Row="1"
+                Grid.Column="2"
+                Text="{translator:Translate MeanLabel}" 
+                Style="{StaticResource CalculatorButton}"
+                Command="{Binding MeanCommand}"
+            />
+            <Button
+                Grid.Row="2"
+                Text="Σx" 
+                Style="{StaticResource CalculatorButton}"
+                Command="{Binding SumCommand}"
+            >
+                <Button.Triggers>
+                    <DataTrigger
+                        TargetType="Button"
+                        Binding="{Binding IsCalculatingX}"
+                        Value="false"
+                    >
+                        <Setter Property="Text" Value="Σy"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+            <Button 
+                Grid.Row="2" Grid.Column="1"
+                Text="Σx^2" 
+                Style="{StaticResource CalculatorButton}"
+                Command="{Binding SumOfSquareCommand}"
+            >
+                <Button.Triggers>
+                    <DataTrigger
+                        TargetType="Button"
+                        Binding="{Binding IsCalculatingX}"
+                        Value="false"
+                    >
+                        <Setter Property="Text" Value="Σy^2"/>
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+            <Button 
+                Grid.Row="2" Grid.Column="2"
+                Text="σ" 
+                Style="{StaticResource CalculatorButton}"
+                Command="{Binding PopulationStandardDeviationCommand}"
+            />
+            <Button 
+                Grid.Row="3" Grid.Column="2"
+                Text="σ^2" 
+                Style="{StaticResource CalculatorButton}"
+                Command="{Binding PopulationVarianceCommand}"
+            />
+            <Button 
+                Text="s"
+                Style="{StaticResource CalculatorButton}"
+                Grid.Row="3"
+                Command="{Binding SampleStandardDeviationCommand}"
+            />
+            <Button 
+                Grid.Row="3" Grid.Column="1"
+                Text="s^2"
+                Style="{StaticResource CalculatorButton}"
+                Command="{Binding SampleVarianceCommand}"
+            />
+        </Grid>
+    </ContentView.Content>
+</contentViews:BaseCalculatorView>

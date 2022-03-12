@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:translator="clr-namespace:StatisticsCalculator.Translation"
+             mc:Ignorable="d"
+             x:Class="StatisticsCalculator.Views.StatisticsPage"
+             Title="{translator:Translate StatisticsTabLabel}">
+    <ContentPage.Resources>
+        <Style x:Key="ResultLabel" TargetType="Label">
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="Medium"/>
+        </Style>
+        <Style x:Key="ResultFrame" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="#eee"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Grid.Row" Value="1"/>
+            <Setter Property="Grid.RowSpan" Value="2"/>
+            <Setter Property="HasShadow" Value="False"/>
+            <Setter Property="Margin" Value="30, 0, 30, 0"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+        <Style x:Key="ResultText" TargetType="Label">
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="Medium"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <FlexLayout Direction="Column">
+                <Picker x:Name="CalculatorPicker"
+                        ItemDisplayBinding="{Binding Label}"
+                        Margin="30"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <Label
+                        x:Name="resultLabel" 
+                        Text="{Binding ResultLabel}" 
+                        Style="{StaticResource ResultLabel}"
+                    />
+                    <Frame 
+                        Style="{StaticResource ResultFrame}"
+                    >
+                        <Label
+                            x:Name="resultField"
+                            Text="{Binding Result}"
+                            Style="{StaticResource ResultText}"
+                        />
+                    </Frame>
+                </Grid>
+                <ContentView Content="{Binding Source={Reference CalculatorPicker}, Path=SelectedItem.Calculator}"/>
+            </FlexLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

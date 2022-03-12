@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:StatisticsCalculator.ViewModels"
+             xmlns:contentViews="clr-namespace:StatisticsCalculator.ContentViews"
+             xmlns:translator="clr-namespace:StatisticsCalculator.Translation"
+             mc:Ignorable="d"
+             x:Class="StatisticsCalculator.Views.SamplePage"
+             Title="{translator:Translate SampleLabel}">
+    <ContentPage.Resources>
+        <viewModels:SampleViewModel x:Key="SampleVM"/>
+        <Style x:Key="SampleCollection" TargetType="CollectionView">
+            <Setter Property="BackgroundColor" Value="#eee"/>
+            <Setter Property="HeightRequest" Value="380"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout 
+                VerticalOptions="StartAndExpand"
+                BindingContext="{StaticResource SampleVM}"
+            >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Label 
+                        Text="{Binding SampleItems.Count, StringFormat='n = {0}'}"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        WidthRequest="100"
+                    />
+                    <Label 
+                        Grid.Column="1"
+                        Text="{translator:Translate SampleLabel}"
+                        TextColor="Black"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                    />
+                    <Button
+                        Grid.Column="2"
+                        Text="{translator:Translate CleanButtonText}"
+                        Command="{Binding ClearSampleCommand}"
+                        Margin="0, 0, 10, 0"
+                    />
+                </Grid>
+                <ContentView 
+                    Margin="5, 0"
+                    BackgroundColor="#aaa"
+                    Padding="1"
+                >
+                    <CollectionView 
+                        Style="{StaticResource SampleCollection}"
+                        ItemsSource="{Binding SampleItems}">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout 
+                                Orientation="Vertical"
+                                Span="3"
+                            />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <contentViews:SampleItemView Padding="5"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.EmptyView>
+                            <Label 
+                                Text="{translator:Translate EmptySampleText}" 
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"
+                            />
+                        </CollectionView.EmptyView>
+                    </CollectionView>
+                </ContentView>
+                <FlexLayout
+                    Direction="Row"
+                >
+                    <Entry
+                        FlexLayout.Grow="1"
+                        Keyboard="Numeric"
+                        Margin="10, 0"
+                        Text="{Binding EntrySampleText}"
+                        Placeholder="{translator:Translate NewSampleItemPlaceholder}"
+                    />
+                    <Entry
+                        FlexLayout.Grow="1"
+                        Keyboard="Numeric"
+                        Margin="10, 0"
+                        Text="{Binding EntryValueOfYText}"
+                        Placeholder="{translator:Translate Y_NewSampleItemPlaceholder}"
+                        IsVisible="False"
+                    >
+                        <Entry.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding SampleMode}"
+                                Value="{Static viewModels:SampleMode.Pair}"
+                            >
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
+                </FlexLayout>
+                <Grid
+                    Margin="10"
+                >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Text="{Binding SwitchModeText}"
+                        Command="{Binding SwitchModeCommand}"
+                    />
+                    <Button
+                        Grid.Column="1"
+                        Text="{translator:Translate AddButtonText}"
+                        Command="{Binding AddSampleItemCommand}"
+                    />
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

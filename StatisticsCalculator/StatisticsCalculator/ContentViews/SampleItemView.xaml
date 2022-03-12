@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="StatisticsCalculator.ContentViews.SampleItemView">
+  <ContentView.Content>
+        <Frame Padding="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+                <Button 
+                    Text="X"
+                    Command="{Binding RemoveItemCommand}"
+                />
+                <Label 
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    BackgroundColor="Transparent"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    Text="{Binding ItemValue.Value}" 
+                >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="{Binding ItemValue.Value}"
+                            />
+                            <Span
+                                Text="{Binding ItemValue.ValueOfY, StringFormat=' ; {0}', TargetNullValue=''}"
+                            />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Grid>
+        </Frame>
+  </ContentView.Content>
+</ContentView>
